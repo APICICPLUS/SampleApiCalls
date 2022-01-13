@@ -11,11 +11,19 @@ namespace CicPlus.Api.Samples
     {
         private static IConfiguration config;
         private static string authorizationToken;
+        private static string subsriptionKey;
+
         public static void Main(string[] args)
         {
             config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-            authorizationToken = GetAuthorizationToken("[YOUR USER NAME]", "[YOUR PASSWORD]", "[YOUR COMPANY URL SUFFIX]");
+            var userName = config["UserName"];
+            var password = config["Password"];
+            var companyUrlSuffix = config["CompanyUrlSuffix"];
+            
+            subsriptionKey = config["SubscriptionKey"];
+
+            authorizationToken = GetAuthorizationToken(userName, password, companyUrlSuffix);
 
             var samples = GetSamples();
 
@@ -54,6 +62,7 @@ namespace CicPlus.Api.Samples
 
             client.BaseUrl = new Uri(endpoint);
             IRestRequest req = new RestRequest(endpoint, Method.POST);
+            req.AddHeader("Ocp-Apim-Subscription-Key", subsriptionKey);
 
             var userSignIn = new UserSignInModel
             {
@@ -80,6 +89,7 @@ namespace CicPlus.Api.Samples
             client.BaseUrl = new Uri(endpoint);
             IRestRequest req = new RestRequest(endpoint, Method.GET);
             req.AddHeader("Authorization", "bearer " + authorizationToken);
+            req.AddHeader("Ocp-Apim-Subscription-Key", subsriptionKey);
 
             IRestResponse response = client.Execute(req);
 
@@ -105,6 +115,7 @@ namespace CicPlus.Api.Samples
             client.BaseUrl = new Uri(endpoint);
             IRestRequest req = new RestRequest(endpoint, Method.GET);
             req.AddHeader("Authorization", "bearer " + authorizationToken);
+            req.AddHeader("Ocp-Apim-Subscription-Key", subsriptionKey);
             req.AddParameter("sampleName", sampleName);
 
             IRestResponse response = client.Execute(req);
