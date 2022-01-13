@@ -46,10 +46,11 @@ namespace CicPlus.Api.Samples
 
             if (result != null)
             {
-                string path = "c:/" + sampleName + ".pdf";
+                var storagePath = config["SampleStoragePath"];
+                string filePath = storagePath + sampleName + ".pdf";
 
-                File.WriteAllBytes(path, result);
-                Console.WriteLine("Sample Pay Statement can be found at " + path);
+                File.WriteAllBytes(filePath, result);
+                Console.WriteLine("Sample Pay Statement can be found at " + filePath);
             }
 
         }
