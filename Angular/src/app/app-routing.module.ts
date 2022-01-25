@@ -12,7 +12,6 @@ const routes: Routes = [
     path: 'api-tester',
     component: ApiTesterComponent
   }
-
 ];
 
 @NgModule({

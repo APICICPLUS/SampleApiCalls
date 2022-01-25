@@ -1,0 +1,40 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="mat-elevation-z8">
+    <mat-card-header fxLayoutAlign="center center">
+      <mat-card-title>Sign In</mat-card-title>
+    </mat-card-header>    
+    <mat-card-content>
+      <mat-form-field >
+        <input required matInput type="text" name="userName" placeholder="User name" [(ngModel)]="user.userName">
+        <mat-icon matSuffix class="material-icons">account_box</mat-icon>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input required matInput [type]="hidePassword ? 'password' : 'text'" name="password" placeholder="Password" [(ngModel)]="user.password">
+        <mat-icon matSuffix class="clickable" (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </mat-form-field>
+      <mat-form-field >
+        <input required matInput type="text" name="companyUrlSuffix" placeholder="Company Url" [(ngModel)]="user.CompanyUrlSuffix">
+        <mat-icon matSuffix class="material-icons">account_box</mat-icon>
+      </mat-form-field>
+      <mat-form-field >
+        <input required matInput type="text" name="subscriptionKey" placeholder="Subscription Key" [(ngModel)]="user.subscriptionKey">
+        <mat-icon matSuffix class="material-icons">key</mat-icon>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-raised-button color="primary" (click)="signIn()">Sign In</button>
+          <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+      <div class="progress-container">
+        <mat-progress-bar *ngIf="processing" color="primary" mode="indeterminate">
+        </mat-progress-bar>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-error *ngIf="serverError">{{serverMessage}}</mat-error>
+      </div>
+    </mat-card-actions>  
+  </mat-card>
+</div>
